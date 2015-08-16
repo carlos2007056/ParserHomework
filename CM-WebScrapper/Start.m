@@ -8,6 +8,8 @@
 
 #import "Start.h"
 
+#define nURLSolita       @"http://www.xolos.com.mx"
+
 @interface Start ()
 @property (strong, nonatomic) UIWebView *webNews;
 @end
@@ -48,10 +50,17 @@
     NSString *stClassHeader = [self.webNews stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.getElementsByClassName('listados')[0].children[0].innerText;"]];
     print(NSLog(@"stClassHeader %@", stClassHeader))
         
-    NSString *stClassImage  = [self.webNews stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.getElementsByClassName('imagen')[0].children[0].getAttribute('src');"]];
-    print(NSLog(@"stClassImage %@", stClassImage))
+    NSString *stClassImage2  = [self.webNews stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.getElementsByClassName('imagen')[0].children[0].getAttribute('src');"]];
+  
+        NSString *stClassImage  = [NSString stringWithFormat:@"%@%@",
+                        nURLSolita,stClassImage2 ];
         
-    NSURL *url                      = [NSURL URLWithString:stClassImage];
+        
+        print(NSLog(@"stClassImage %@", stClassImage))
+      
+        
+        
+    NSURL *url  = [NSURL URLWithString:stClassImage];
     [self.imgNews sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@""] options:SDWebImageRefreshCached];
         
     self.lblHeader.text = stClassHeader;
